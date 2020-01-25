@@ -36,6 +36,9 @@
 
 #include <iostream>
 #include <cassert>
+#include <cstdlib>
+#include <string>
+
 #include <libpmemkv.hpp>
 
 using namespace pmem::kv;
@@ -45,11 +48,11 @@ using std::endl;
 using std::string;
 
 /*
- * for this example, create a 1 Gig file
+ * for this example, create a 8Mb file
  * called "/daxfs/kvfile"
  */
-auto PATH = "/daxfs/kvfile";
-const uint64_t SIZE = 1024 * 1024 * 1024;
+auto PATH = "./kvfile_test";
+const uint64_t SIZE = 1024 * 1024 * 8;
 
 /*
  * kvprint -- print a single key-value pair
@@ -62,6 +65,7 @@ int kvprint(string_view k, string_view v) {
 
 int main() {
 	// start by creating the db object
+    system(std::string("rm ").append(PATH).c_str());
 	db *kv = new db();
 	assert(kv != nullptr);
 
@@ -85,21 +89,21 @@ int main() {
 
 	// open the key-value store, using the cmap engine
 	if (kv->open("cmap", std::move(cfg)) != status::OK) {
-		cerr << db::errormsg() << endl;
+		cerr << errormsg() << endl;
 		exit(1);
 	}
 
 	// add some keys and values
 	if (kv->put("key1", "value1") != status::OK) {
-		cerr << db::errormsg() << endl;
+		cerr << errormsg() << endl;
 		exit(1);
 	}
 	if (kv->put("key2", "value2") != status::OK) {
-		cerr << db::errormsg() << endl;
+		cerr << errormsg() << endl;
 		exit(1);
 	}
 	if (kv->put("key3", "value3") != status::OK) {
-		cerr << db::errormsg() << endl;
+		cerr << errormsg() << endl;
 		exit(1);
 	}
 

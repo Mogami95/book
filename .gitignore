@@ -1,2 +1,5 @@
 *.lst
 a.out
+.cproject
+.project
+.settings/

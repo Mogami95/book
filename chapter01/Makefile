@@ -45,7 +45,7 @@ pmemkv: pmemkv.cpp
 	$(CXX) -o pmemkv pmemkv.cpp -lpmemkv
 
 clean:
-	$(RM) *.o core a.out
+	$(RM) *.o core a.out pmemkv
 
 clobber: clean
 	$(RM) pmemkv *.lst
